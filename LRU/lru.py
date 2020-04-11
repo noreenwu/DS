@@ -21,7 +21,13 @@ class LRU_Cache(object):
 
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent.
-        pass
+        if self.cache.get(key, -1) == -1:
+            return -1
+
+
+        retval = self.cache[key].value
+        self.LRU_update(self.cache[key], key, self.cache[key].value)
+        return retval
 
 
 
@@ -53,6 +59,10 @@ class LRU_Cache(object):
 
         n = Node(key, value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         # n = self.cache[key]
+
+        print("address of updated node ", self.cache[key].value)
+        # something = self.cache[key]
+
         self.lru_tail.next = n
         n.prev = self.lru_tail
         self.lru_tail = n
@@ -148,13 +158,16 @@ our_cache.set(4, 40)
 
 print(our_cache)
 
-# our_cache.set(4, 40)
+our_cache.set(1, 10)
 
-# print(our_cache)
+print(our_cache)
 # our_cache.get(1)       # returns 1
 # our_cache.get(2)       # returns 2
-# our_cache.get(9)      # returns -1 because 9 is not present in the cache
+print("GET")
+print(our_cache.get(9))      # returns -1 because 9 is not present in the cache
 
+print(our_cache.get(4))
+print(our_cache.get(1))
 # our_cache.set(5, 5)
 # our_cache.set(6, 6)
 
