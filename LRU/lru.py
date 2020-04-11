@@ -4,6 +4,7 @@ class Node(object):
     def __init__(self, value):
         self.value = value
         self.next = None
+        self.prev = None
 
 
 class LRU_Cache(object):
@@ -21,14 +22,6 @@ class LRU_Cache(object):
         # Retrieve item from provided key. Return -1 if nonexistent.
         pass
 
-    def update_lru(self, key, new_node):
-        #  if the key is there already, then update the value and move the node to end
-        #    of LRU list
-
-        #  if the key is not there, create it, and append it to node at end
-        #  if the cache is maxed out, then delete the LRU item
-
-        pass
 
     def set_cache_value(self, key, value):
 
@@ -49,11 +42,35 @@ class LRU_Cache(object):
         if self.lru_head is None:
             self.lru_head = new_node
             self.lru_tail = new_node
+            new_node.prev = None
 
         else:
+            new_node.prev = self.lru_tail
             self.lru_tail.next = new_node
             self.lru_tail = new_node
             print("appended and moved the tail")
+
+    def LRU_update(self, node, key, value):
+        print("LRU_update")
+        # move the specified node to the end of the LRU list
+        print(node.prev.value)
+        node.prev.next = node.next
+
+        node.prev = self.lru_tail
+
+        print("tail.value is ", self.lru_tail.value)
+        print("tail.next is ", self.lru_tail.next)
+        print("node is  ", node)
+
+        # self.lru_tail.next = node
+        n = Node(value)   # for some reason, cannot move old node to end of list so made new node w/ same value
+        self.lru_tail.next = n
+        n.prev = self.lru_tail
+        self.lru_tail = n
+        self.cache[key] = n
+        # node.prev = self.lru_tail
+        # self.lru_tail = node
+
 
     def LRU_remove_oldest(self):
         if self.lru_head is None:
@@ -70,6 +87,7 @@ class LRU_Cache(object):
         # if the key is present in the cache
         if self.cache.get(key) != None:
             # reset the value and update the LRU order
+            self.LRU_update(self.cache[key], key, value)
             return
 
         # else, if new value, check if there is room in the cache
@@ -105,10 +123,17 @@ our_cache.set(2, 2);
 our_cache.set(3, 3);
 our_cache.set(4, 4);
 our_cache.set(5, 5);
-our_cache.set(6, 6);
+# our_cache.set(6, 6);
+# our_cache.set(7, 7);
+print(our_cache)
+
+our_cache.set(3, 30);
 
 print(our_cache)
 
+our_cache.set(2, 20)
+
+print(our_cache)
 # our_cache.get(1)       # returns 1
 # our_cache.get(2)       # returns 2
 # our_cache.get(9)      # returns -1 because 9 is not present in the cache
