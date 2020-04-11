@@ -23,19 +23,6 @@ class LRU_Cache(object):
         pass
 
 
-    # def set_cache_value(self, key, value):
-
-    #     new_node = Node(value)
-    #     self.cache[key] = new_node
-    #     update_lru(key, new_node)
-
-    #     self.num_entries += 1
-
-    # def remove_oldest(self):
-    #     # find oldest
-
-    #     # delete it
-    #     pass
 
     def LRU_append(self, new_node):
         print("LRU_append")
@@ -63,8 +50,8 @@ class LRU_Cache(object):
 
         # node.prev = self.lru_tail
 
-        # self.lru_tail.next = node
         n = Node(value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
+        # n = self.cache[key]
         self.lru_tail.next = n
         n.prev = self.lru_tail
         self.lru_tail = n
@@ -96,6 +83,7 @@ class LRU_Cache(object):
             ## remove oldest
             print("MAX ENTRIES in cache")
             self.LRU_remove_oldest()
+            self.num_entries -= 1
 
         # now create new item
         new_node = Node(value)
@@ -107,7 +95,7 @@ class LRU_Cache(object):
     def __repr__(self):
         curr = self.lru_head
 
-        str = ""
+        str = "num_entries {}: ".format(self.num_entries)
         while curr:
             num = curr.value
             str += "node {}, ".format(curr.value)
@@ -118,11 +106,26 @@ class LRU_Cache(object):
 our_cache = LRU_Cache(5)
 
 our_cache.set(1, 1);
+
+print(our_cache)
+
 our_cache.set(2, 2);
+
+print(our_cache)
+
 our_cache.set(3, 3);
+
+print(our_cache)
+
 our_cache.set(4, 4);
+
+print(our_cache)
+
 our_cache.set(5, 5);
-# our_cache.set(6, 6);
+
+print(our_cache)
+
+our_cache.set(6, 6);
 # our_cache.set(7, 7);
 print(our_cache)
 
@@ -134,13 +137,13 @@ our_cache.set(2, 20)
 
 print(our_cache)
 
-our_cache.set(1, 10)
-
-print(our_cache)
-
 our_cache.set(4, 40)
 
 print(our_cache)
+
+# our_cache.set(4, 40)
+
+# print(our_cache)
 # our_cache.get(1)       # returns 1
 # our_cache.get(2)       # returns 2
 # our_cache.get(9)      # returns -1 because 9 is not present in the cache
