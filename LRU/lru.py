@@ -167,7 +167,21 @@ print("GET")
 print(our_cache.get(9))      # returns -1 because 9 is not present in the cache
 
 print(our_cache.get(4))
+
+print(our_cache)
+
 print(our_cache.get(1))
+
+print(our_cache)
+
+our_cache.get(6)
+
+print(our_cache)
+
+our_cache.set(13, 13)
+
+print(our_cache)
+
 # our_cache.set(5, 5)
 # our_cache.set(6, 6)
 
