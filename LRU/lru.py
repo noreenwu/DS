@@ -23,19 +23,19 @@ class LRU_Cache(object):
         pass
 
 
-    def set_cache_value(self, key, value):
+    # def set_cache_value(self, key, value):
 
-        new_node = Node(value)
-        self.cache[key] = new_node
-        update_lru(key, new_node)
+    #     new_node = Node(value)
+    #     self.cache[key] = new_node
+    #     update_lru(key, new_node)
 
-        self.num_entries += 1
+    #     self.num_entries += 1
 
-    def remove_oldest(self):
-        # find oldest
+    # def remove_oldest(self):
+    #     # find oldest
 
-        # delete it
-        pass
+    #     # delete it
+    #     pass
 
     def LRU_append(self, new_node):
         print("LRU_append")
@@ -52,24 +52,23 @@ class LRU_Cache(object):
 
     def LRU_update(self, node, key, value):
         print("LRU_update")
-        # move the specified node to the end of the LRU list
-        print(node.prev.value)
-        node.prev.next = node.next
 
-        node.prev = self.lru_tail
+        if self.lru_head == node:
+            # if node was first in list
+            self.lru_head = self.lru_head.next
 
-        print("tail.value is ", self.lru_tail.value)
-        print("tail.next is ", self.lru_tail.next)
-        print("node is  ", node)
+        else:
+            # remove the specified node by making its predecessor skip over specified node
+            node.prev.next = node.next
+
+        # node.prev = self.lru_tail
 
         # self.lru_tail.next = node
-        n = Node(value)   # for some reason, cannot move old node to end of list so made new node w/ same value
+        n = Node(value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         self.lru_tail.next = n
         n.prev = self.lru_tail
         self.lru_tail = n
         self.cache[key] = n
-        # node.prev = self.lru_tail
-        # self.lru_tail = node
 
 
     def LRU_remove_oldest(self):
@@ -132,6 +131,14 @@ our_cache.set(3, 30);
 print(our_cache)
 
 our_cache.set(2, 20)
+
+print(our_cache)
+
+our_cache.set(1, 10)
+
+print(our_cache)
+
+our_cache.set(4, 40)
 
 print(our_cache)
 # our_cache.get(1)       # returns 1
