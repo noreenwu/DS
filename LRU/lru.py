@@ -1,7 +1,8 @@
 
 
 class Node(object):
-    def __init__(self, value):
+    def __init__(self, key, value):
+        self.key = key
         self.value = value
         self.next = None
         self.prev = None
@@ -50,7 +51,7 @@ class LRU_Cache(object):
 
         # node.prev = self.lru_tail
 
-        n = Node(value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
+        n = Node(key, value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         # n = self.cache[key]
         self.lru_tail.next = n
         n.prev = self.lru_tail
@@ -61,6 +62,9 @@ class LRU_Cache(object):
     def LRU_remove_oldest(self):
         if self.lru_head is None:
             return
+
+        print("remove oldest head is ", self.lru_head.key)
+        del(self.cache[self.lru_head.key])
 
         if self.lru_head == self.lru_tail:
             self.lru_tail = self.lru_tail.next
@@ -86,7 +90,7 @@ class LRU_Cache(object):
             self.num_entries -= 1
 
         # now create new item
-        new_node = Node(value)
+        new_node = Node(key, value)
         self.cache[key] = new_node
         self.LRU_append(new_node)   # add (point to) new item to end of list
         self.num_entries += 1
@@ -95,6 +99,9 @@ class LRU_Cache(object):
     def __repr__(self):
         curr = self.lru_head
 
+        # print("dict ", self.cache)
+        for d in self.cache:
+            print ("{}: {}".format(d, self.cache[d].value))
         str = "num_entries {}: ".format(self.num_entries)
         while curr:
             num = curr.value
