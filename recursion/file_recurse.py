@@ -17,8 +17,6 @@ def find_files(suffix, path):
        a list of paths
     """
 
-    # files = os.listdir(path)
-
 
     if os.path.isdir(path):
         files = os.listdir(path)
