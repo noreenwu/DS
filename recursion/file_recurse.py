@@ -27,9 +27,8 @@ def find_files(suffix, path):
             if os.path.isdir(fullpath):
                 find_files(".c", fullpath)
             else:
-                print("{} not a directory".format(fullpath))
                 if fullpath.endswith(".c"):
-                     print("GOT FILE ending in .c: {}".format(fullpath))
+                     print(fullpath)
 
 
 
