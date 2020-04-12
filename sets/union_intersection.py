@@ -18,7 +18,7 @@ class LinkedList:
             out_string += str(cur_head.value) + " -> "
             cur_head = cur_head.next
         if out_string == "":
-            return "no elements in common"
+            return "no elements"
         return out_string
 
 
