@@ -7,14 +7,14 @@ class Block:
       self.timestamp = timestamp
       self.data = data
       self.previous_hash = prev_hash
-      self.hash = self.calc_hash(self.timestamp, self.data, self.previous_hash)
+      self.hash = self.calc_hash()
       self.next = None
       self.prev = None
 
-    def calc_hash(self, ts, data, prev_hash):
+    def calc_hash(self):
           sha = hashlib.sha256()
 
-          hash_str = (str(ts) + data + prev_hash).encode('utf-8')
+          hash_str = (str(self.timestamp) + self.data + self.previous_hash).encode('utf-8')
           # hash_str = "We are going to encode this string of data!".encode('utf-8')
 
           sha.update(hash_str)
@@ -35,21 +35,21 @@ class LinkedList:
 
         return s
 
-    def append(self, value):
+    def append(self, node):
         ts = datetime.now()
         if self.head is None:
-            self.head = Block(ts, value, "0000")
+            self.head = node
             self.tail = self.head
             return
 
 
         prev_hash = self.tail.previous_hash
-        self.tail.next = Block(ts, value, prev_hash)
+        self.tail.next = node
         self.tail.next.prev = self.tail
         self.tail = self.tail.next
 
-    def get_latest(self):
-        return self.tail
+    def get_latest_hash(self):
+        return self.tail.hash
 
 
 class Blockchain:
@@ -58,19 +58,34 @@ class Blockchain:
         self.blockchain = LinkedList()
 
     def create_genesis_block(self):
-        self.blockchain.append("genesis")
+        ts = datetime.now()
+        new_block = Block(ts, "genesis", "0")
+        self.blockchain.append(new_block)
         print(self.blockchain)
 
-    def get_latest_block(self):
-        return self.blockchain.get_latest()
+    # def get_latest_block(self):
+    #     return self.blockchain.get_latest()
 
     def add_block(self, new_block):
-        new_block.previous_hash = get_latest_block().hash
+        new_block.previous_hash = self.blockchain.get_latest_hash()
         new_block.hash = new_block.calc_hash()
+        self.blockchain.append(new_block)
+        print(self.blockchain)
 
 
 
 bc = Blockchain()
+bc.create_genesis_block()    # very first block
 
-bc.create_genesis_block()
+ts = datetime.now()
+new_block = Block(ts, "hello", "1")
+bc.add_block(new_block)
+
+ts = datetime.now()
+new_block = Block(ts, "hola", "2")
+bc.add_block(new_block)
+
+ts = datetime.now()
+new_block = Block(ts, "gutentag", "3")
+bc.add_block(new_block)
 
