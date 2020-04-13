@@ -11,6 +11,11 @@ class Block:
       self.next = None
       self.prev = None
 
+    def __str__(self):
+        s = " timestamp: {}\ndata: {}\nhash: {}\nprevious hash: {}\n".format(self.timestamp,
+                                                self.data, self.hash, self.previous_hash)
+        return s
+
     def calc_hash(self):
           sha = hashlib.sha256()
 
@@ -30,7 +35,7 @@ class LinkedList:
         curr = self.head
         s = ""
         while curr:
-            s += " {}->".format(curr.data)
+            s += " {}: {}->".format(curr.data, curr.hash)
             curr = curr.next
 
         return s
@@ -63,8 +68,6 @@ class Blockchain:
         self.blockchain.append(new_block)
         print(self.blockchain)
 
-    # def get_latest_block(self):
-    #     return self.blockchain.get_latest()
 
     def add_block(self, new_block):
         new_block.previous_hash = self.blockchain.get_latest_hash()
