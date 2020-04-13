@@ -33,9 +33,12 @@ class LinkedList:
 
     def __str__(self):
         curr = self.head
-        s = ""
+        s = "--start of chain--\n"
         while curr:
-            s += " {}: {}->".format(curr.data, curr.hash)
+            s += "data: {}\ntimestamp: {}\nhash: {}\nprev hash:{}\n--end of block--\n".format(
+                                            curr.data, curr.timestamp, curr.hash, curr.previous_hash)
+            if curr.next is None:
+                s += "---end of chain---\n"
             curr = curr.next
 
         return s
@@ -62,18 +65,19 @@ class Blockchain:
     def __init__(self):
         self.blockchain = LinkedList()
 
+    def pr(self):
+        print(self.blockchain)
+
     def create_genesis_block(self):
         ts = datetime.now()
         new_block = Block(ts, "genesis", "0")
         self.blockchain.append(new_block)
-        print(self.blockchain)
 
 
     def add_block(self, new_block):
         new_block.previous_hash = self.blockchain.get_latest_hash()
         new_block.hash = new_block.calc_hash()
         self.blockchain.append(new_block)
-        print(self.blockchain)
 
 
 
@@ -92,3 +96,4 @@ ts = datetime.now()
 new_block = Block(ts, "gutentag", "3")
 bc.add_block(new_block)
 
+bc.pr()
