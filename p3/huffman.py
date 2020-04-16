@@ -9,6 +9,16 @@ class Node(object):
         self.value = value
         self.left_child = None
         self.right_child = None
+        self.code = ""
+
+    def get_letter(self):
+        return self.letter
+
+    def set_code(self, code):
+        self.code = code
+
+    def get_code(self):
+        return self.code
 
     def set_value(self, value):
         self.value = value
@@ -86,19 +96,21 @@ print ("top node is {}".format(top.get_value()))
 
 ## traverse tree and create codes
 visit_order = []
-def traverse(node):
+def traverse(node, charstr):
     if node:
-        if node.get_value != '':
+        if node.get_letter() != '':
             visit_order.append(node.get_value())
+            node.set_code(charstr)
+            print("letter {} assigned {}".format(node.get_letter(), node.get_code()))
 
-        traverse(node.get_left_child())
+        traverse(node.get_left_child(), charstr+'0')
 
-        traverse(node.get_right_child())
+        traverse(node.get_right_child(), charstr+'1')
 
     return visit_order
 
 
-print(traverse(top))
+print(traverse(top, ""))
 
 
 
