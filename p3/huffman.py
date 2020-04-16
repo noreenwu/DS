@@ -69,7 +69,8 @@ def count_letters(str):
 
     # print(ordered)
 
-count_letters("hellooo")
+str_to_encode = "helllohhhhhhhhhhhhhhhhhh"
+count_letters(str_to_encode)
 
 print("initial heap size is {}".format(len(heap)))
 
@@ -96,12 +97,15 @@ print ("top node is {}".format(top.get_value()))
 
 ## traverse tree and create codes
 visit_order = []
+encode_table = {}
+
 def traverse(node, charstr):
     if node:
         if node.get_letter() != '':
             visit_order.append(node.get_value())
             node.set_code(charstr)
             print("letter {} assigned {}".format(node.get_letter(), node.get_code()))
+            encode_table[node.get_letter()] = node.get_code()
 
         traverse(node.get_left_child(), charstr+'0')
 
@@ -112,6 +116,15 @@ def traverse(node, charstr):
 
 print(traverse(top, ""))
 
+print("Encoding table: ")
+for k, v in encode_table.items():
+    print("k {}: {}".format(k, v))
 
 
+encoded = ""
+for s in str_to_encode:
+    print(s)
+    encoded += encode_table[s]
+
+print(encoded)
         
