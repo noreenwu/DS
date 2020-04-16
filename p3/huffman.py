@@ -51,6 +51,45 @@ class Node(object):
         return (self.value < other.value)
 
 
+def traverse(node, charstr):
+    if node:
+        if node.get_letter() != '':
+            visit_order.append(node.get_value())
+            node.set_code(charstr)
+            print("letter {} assigned {}".format(node.get_letter(), node.get_code()))
+            encode_table[node.get_letter()] = node.get_code()
+
+        traverse(node.get_left_child(), charstr+'0')
+
+        traverse(node.get_right_child(), charstr+'1')
+
+    return visit_order
+
+def decode(str, node):
+    if node is None:
+        return
+    curr = node
+    print ("decode {}".format(node.get_value()))
+    res = ''    
+    for s in str:
+        # print(s)
+        if s == '0':
+            if (curr.has_left_child()):
+                curr = curr.get_left_child()
+                # res += '0'
+        elif s == '1':
+            if (curr.has_right_child()):
+                curr = curr.get_right_child()
+                # res += '1'
+
+        if curr.get_letter() != '':
+            res += curr.get_letter()
+            curr = node
+
+    print (res)
+    return res
+
+
 
 
 dict = {}
@@ -63,13 +102,8 @@ def count_letters(str):
         print ("new node {}".format(node))
         heappush(heap, node)
 
-    # ordered = []
-    # while heap:
-    #     ordered.append(heappop(heap))
 
-    # print(ordered)
-
-str_to_encode = "helllohhhhhhhhhhhhhhhhhh"
+str_to_encode = "helllo"
 count_letters(str_to_encode)
 
 print("initial heap size is {}".format(len(heap)))
@@ -99,20 +133,6 @@ print ("top node is {}".format(top.get_value()))
 visit_order = []
 encode_table = {}
 
-def traverse(node, charstr):
-    if node:
-        if node.get_letter() != '':
-            visit_order.append(node.get_value())
-            node.set_code(charstr)
-            print("letter {} assigned {}".format(node.get_letter(), node.get_code()))
-            encode_table[node.get_letter()] = node.get_code()
-
-        traverse(node.get_left_child(), charstr+'0')
-
-        traverse(node.get_right_child(), charstr+'1')
-
-    return visit_order
-
 
 print(traverse(top, ""))
 
@@ -127,4 +147,7 @@ for s in str_to_encode:
     encoded += encode_table[s]
 
 print(encoded)
+
+decode(encoded, top)
+
         
