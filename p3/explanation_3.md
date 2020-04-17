@@ -37,8 +37,13 @@ to build the encoded data. O(N)
 The entire encoding process ends up being a multiple of O(N) -- even though there are a number of steps,
 each of them is on the order of O(N).
 
-
-
+Decoding: To decode, walk through the encoded string, and starting from the top of the Huffman tree, 
+allow the '0' character (byte) to guide you left and the '1' character to guide you right. The encoded
+data is supposed to take up less space than the original, but each character has to be looked at in decoding,
+and there will be more characters than there were originally. As the number of unique characters
+in the original input increases, the number of codes generated will be correspondingly larger. If
+there are 26 unique characters, the codes are as long as 5; if 52 characters the codes are as long
+as 6, or log N. So the length of the data string that has to be looked through is worst case about O(N log N).
 
 
 ## Space Complexity
