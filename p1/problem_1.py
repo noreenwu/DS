@@ -69,7 +69,7 @@ class LRU_Cache(object):
         # print("remove oldest head is ", self.lru_head.key)
         del(self.cache[self.lru_head.key])
 
-        if self.lru_head == self.lru_tail:
+        if self.lru_head == self.lru_tail:   # one item in list
             self.lru_tail = self.lru_tail.next
 
         self.lru_head = self.lru_head.next
