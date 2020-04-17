@@ -59,6 +59,9 @@ class LinkedList:
     def get_latest_hash(self):
         return self.tail.hash
 
+    def get_latest_block(self):
+        return self.tail
+
 
 class Blockchain:
 
@@ -79,21 +82,29 @@ class Blockchain:
         new_block.hash = new_block.calc_hash()
         self.blockchain.append(new_block)
 
+    def get_latest_block(self):
+        return self.blockchain.get_latest_block()
 
 
 bc = Blockchain()
-bc.create_genesis_block()    # very first block
+bc.create_genesis_block()                # very first block: the prev hash is set to 0
 
 ts = datetime.now()
-new_block = Block(ts, "hello", "1")
+new_block = Block(ts, "hello", "1")      # previous hash should look like the genesis block's hash
 bc.add_block(new_block)
 
 ts = datetime.now()
-new_block = Block(ts, "hola", "2")
+new_block = Block(ts, "hola", "2")       # previous hash should look like hello's hash
 bc.add_block(new_block)
 
 ts = datetime.now()
-new_block = Block(ts, "gutentag", "3")
+new_block = Block(ts, "gutentag", "3")   # previous hash should look like hola's hash
+bc.add_block(new_block)
+
+ts = datetime.now()
+new_block = Block(ts, "konichiwa", "4")  # previous has should look like gutentag's hash
 bc.add_block(new_block)
 
 bc.pr()
+
+print(bc.get_latest_block())             # print last block on chain
