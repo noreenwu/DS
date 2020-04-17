@@ -58,7 +58,7 @@ def huffman_build_tree(data):
     heap = []
     for k, v in dict.items():
         node = Node(v, k)
-        print ("new node {}".format(node))
+        # print ("new node {}".format(node))
         heappush(heap, node)
 
     # create mini-trees with two lowest frequency values and merge trees
@@ -67,21 +67,16 @@ def huffman_build_tree(data):
         tree = Node(0)    
         pop1 = heappop(heap)
         pop2 = heappop(heap)
-        print("popping {} and {}".format(pop1, pop2))
-        print("just popped 2 items and heap len is {}".format(len(heap)))
+        # print("popping {} and {}".format(pop1, pop2))
+        # print("just popped 2 items and heap len is {}".format(len(heap)))
         tree.left_child = pop1
         tree.right_child = pop2
         tree.set_value(pop1.get_value() + pop2.get_value())
-        print("new node is {}".format(tree))
+        # print("new node is {}".format(tree))
 
         heappush(heap, tree)
-        print("just pushed 1 tree item and heap len is {}".format(len(heap)))
-
-
-    print("size of h is now: {}".format(len(heap)))
 
     top = heappop(heap)    
-    print ("top node is {}".format(top.get_value()))        
 
     return top  # encode/decode tree
 
@@ -89,13 +84,12 @@ def huffman_build_tree(data):
 encode_table = {}   
 
 def encode(node, charstr):
-    visit_order = []    
+    # visit_order = []    
   
     if node:
         if node.get_letter() != '':
-            visit_order.append(node.get_value())
+            # visit_order.append(node.get_value())
             node.set_code(charstr)
-            print("letter {} assigned {}".format(node.get_letter(), node.get_code()))
             encode_table[node.get_letter()] = node.get_code()
 
         encode(node.get_left_child(), charstr+'0')
@@ -106,30 +100,28 @@ def encode(node, charstr):
 
 
 def huffman_encode(data, tree):
-    ## traverse tree and create codes
-    print("huffman_encode")
+    # traverse tree and create codes
    
     encode(top, "")
 
-    print("Encoding table: ")
-    for k, v in encode_table.items():
-        print("k {}: {}".format(k, v))
+    # print("Encoding table: ")
+    # for k, v in encode_table.items():
+    #     print("k {}: {}".format(k, v))
 
 
     encoded = ""
     for c in data:
-        print(c)
         encoded += encode_table[c]
 
     return encoded
 
 def huffman_decode(str, node):
-# def decode(str, node):
     if node is None:
-        return
+        return ""
+
     curr = node
-    print ("decode {}".format(node.get_value()))
     res = ''    
+
     for s in str:
         if s == '0':
             if (curr.has_left_child()):
@@ -142,11 +134,10 @@ def huffman_decode(str, node):
             res += curr.get_letter()
             curr = node
 
-    print (res)
     return res
 
 
-str_to_encode = "helllotherelongstring"
+str_to_encode = "oh hello i am a nice happy string"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
 
