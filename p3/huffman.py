@@ -116,6 +116,7 @@ def huffman_encode(data, tree):
     return encoded
 
 def huffman_decode(str, node):
+    # decode the str provided using provided tree (node)
     if node is None:
         return ""
 
@@ -146,8 +147,6 @@ top = huffman_build_tree(str_to_encode)
 encoded = huffman_encode(str_to_encode, top)
 print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded, base=2))))
 print ("The content of the encoded data is: {}\n".format(encoded))
-
-# print(encoded)
 
 decoded = huffman_decode(encoded, top)
 
