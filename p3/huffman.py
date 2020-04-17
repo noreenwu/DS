@@ -58,7 +58,6 @@ def huffman_build_tree(data):
     heap = []
     for k, v in dict.items():
         node = Node(v, k)
-        # print ("new node {}".format(node))
         heappush(heap, node)
 
     # create mini-trees with two lowest frequency values and merge trees
@@ -67,12 +66,9 @@ def huffman_build_tree(data):
         tree = Node(0)    
         pop1 = heappop(heap)
         pop2 = heappop(heap)
-        # print("popping {} and {}".format(pop1, pop2))
-        # print("just popped 2 items and heap len is {}".format(len(heap)))
         tree.left_child = pop1
         tree.right_child = pop2
         tree.set_value(pop1.get_value() + pop2.get_value())
-        # print("new node is {}".format(tree))
 
         heappush(heap, tree)
 
@@ -99,21 +95,15 @@ def encode(node, charstr):
     return encode_table
 
 
-def huffman_encode(data, tree):
-    # traverse tree and create codes
-   
-    encode(top, "")
-
-    # print("Encoding table: ")
-    # for k, v in encode_table.items():
-    #     print("k {}: {}".format(k, v))
-
+def huffman_encode(data):   
+    top = huffman_build_tree(data)             # build the encode/decode tree
+    encode(top, "")                            # traverse tree to create codes
 
     encoded = ""
     for c in data:
         encoded += encode_table[c]
 
-    return encoded
+    return encoded, top
 
 def huffman_decode(str, node):
     # decode the str provided using provided tree (node)
@@ -138,13 +128,11 @@ def huffman_decode(str, node):
     return res
 
 
-str_to_encode = "oh hello i am a nice happy string"
+str_to_encode = "oh hello i am a nice happy string yes indeed"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
 
-top = huffman_build_tree(str_to_encode)
-
-encoded = huffman_encode(str_to_encode, top)
+encoded, top = huffman_encode(str_to_encode)
 print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded, base=2))))
 print ("The content of the encoded data is: {}\n".format(encoded))
 
