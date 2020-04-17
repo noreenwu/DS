@@ -48,3 +48,5 @@ as 6, or log N. So the length of the data string that has to be looked through i
 
 ## Space Complexity
 
+For N unique characters, we need to allocate space for up to 2 x N nodes for the tree, so the space complexity is O(N).
+
