@@ -56,9 +56,6 @@ class LRU_Cache(object):
         n = Node(key, value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         # n = self.cache[key]
 
-        # print("address of updated node ", self.cache[key].value)
-        # something = self.cache[key]
-
         self.lru_tail.next = n
         n.prev = self.lru_tail
         self.lru_tail = n
@@ -105,7 +102,6 @@ class LRU_Cache(object):
     def __repr__(self):
         curr = self.lru_head
 
-        # print("dict ", self.cache)
         for d in self.cache:
             print ("{}: {}".format(d, self.cache[d].value))
         str = "num_entries {}: ".format(self.num_entries)
@@ -117,6 +113,7 @@ class LRU_Cache(object):
 
 
 our_cache = LRU_Cache(5)
+print(our_cache.get(10))        # return -1
 
 our_cache.set(1, 1);
 our_cache.set(2, 2);
