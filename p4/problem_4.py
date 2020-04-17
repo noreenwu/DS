@@ -72,7 +72,7 @@ def is_user_in_group(user, group):
     return result
 
 
-# test case 1
+
 parent_group = Group("Parent Group")
 
 child_group_a = Group("Child Group A")
