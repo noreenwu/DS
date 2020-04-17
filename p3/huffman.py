@@ -95,7 +95,7 @@ def encode(node, charstr):
     return encode_table
 
 
-def huffman_encode(data):   
+def huffman_encoding(data):   
     top = huffman_build_tree(data)             # build the encode/decode tree
     encode(top, "")                            # traverse tree to create codes
 
@@ -105,7 +105,7 @@ def huffman_encode(data):
 
     return encoded, top
 
-def huffman_decode(str, node):
+def huffman_decoding(str, node):
     # decode the str provided using provided tree (node)
     if node is None:
         return ""
@@ -132,12 +132,12 @@ str_to_encode = "oh hello i am a nice happy string yes indeed"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
 
-encoded, top = huffman_encode(str_to_encode)
-print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded, base=2))))
-print ("The content of the encoded data is: {}\n".format(encoded))
+encoded_data, tree = huffman_encoding(str_to_encode)
+print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+print ("The content of the encoded data is: {}\n".format(encoded_data))
 
-decoded = huffman_decode(encoded, top)
+decoded_data = huffman_decoding(encoded_data, tree)
 
-print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded)))
-print ("The content of the encoded data is: {}\n".format(decoded))
+print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+print ("The content of the encoded data is: {}\n".format(decoded_data))
         
