@@ -50,11 +50,6 @@ class Node(object):
         return (self.value < other.value)
 
 
-
-
-
-
-
 def decode(str, node):
     if node is None:
         return
@@ -114,12 +109,12 @@ def huffman_build_tree(data):
 
     return top  # encode/decode tree
 
-encode_table = {}  
+
+encode_table = {}   
 
 def encode(node, charstr):
     visit_order = []    
   
-
     if node:
         if node.get_letter() != '':
             visit_order.append(node.get_value())
@@ -137,7 +132,8 @@ def encode(node, charstr):
 def huffman_encode(data, tree):
     ## traverse tree and create codes
     print("huffman_encode")
-    encode_table = encode(top, "")
+   
+    encode(top, "")
 
     print("Encoding table: ")
     for k, v in encode_table.items():
@@ -145,11 +141,10 @@ def huffman_encode(data, tree):
 
 
     encoded = ""
-    for s in data:
-        print(s)
-        encoded += encode_table[s]
+    for c in data:
+        print(c)
+        encoded += encode_table[c]
 
-    print(encoded)
     return encoded
 
 def huffman_decode(data, tree):
@@ -157,48 +152,11 @@ def huffman_decode(data, tree):
 
 
 
-# dict = {}
-# def count_letters(str):
-#     for a in str:
-#         dict[a] = dict.get(a, 0) + 1
-
-#     for k, v in dict.items():
-#         node = Node(v, k)
-#         print ("new node {}".format(node))
-#         heappush(heap, node)
-
-
 str_to_encode = "helllo"
 top = huffman_build_tree(str_to_encode)
 
 encoded = huffman_encode(str_to_encode, top)
-
-# count_letters(str_to_encode)
-
-# print("initial heap size is {}".format(len(heap)))
-
-# while len(heap) > 1:
-#     tree = Node(0)    
-#     pop1 = heappop(heap)
-#     pop2 = heappop(heap)
-#     print("popping {} and {}".format(pop1, pop2))
-#     print("just popped 2 items and heap len is {}".format(len(heap)))
-#     tree.left_child = pop1
-#     tree.right_child = pop2
-#     tree.set_value(pop1.get_value() + pop2.get_value())
-#     print("new node is {}".format(tree))
-
-#     heappush(heap, tree)
-#     print("just pushed 1 tree item and heap len is {}".format(len(heap)))
-
-
-# print("size of h is now: {}".format(len(heap)))
-
-# top = heappop(heap)    
-# print ("top node is {}".format(top.get_value()))    
-
-
-
+print(encoded)
 
 decode(encoded, top)
 
