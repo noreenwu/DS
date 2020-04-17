@@ -96,14 +96,14 @@ child_group_b.add_group(child_group_bb)
 child_user_b = "childuserb"
 child_group_b.add_user(child_user_b)
 
-is_user_in_group(child_user_b, parent_group)  # user is found in Child Group B under Parent Group
+is_user_in_group(child_user_b, parent_group)  # True: user is found in Child Group B under Parent Group
 
 
 child_user_ba = "childuserba"
 child_group_ba.add_user(child_user_ba)
 
-is_user_in_group(child_user_ba, parent_group)  # user is found in Child Group BA under Child Group B under Parent Group
+is_user_in_group(child_user_ba, parent_group)  # True: user is found in Child Group BA under Child Group B under Parent Group
 
-is_user_in_group(child_user_ba, child_group_a) # user is NOT found in Child Group A (the user is in B)
+is_user_in_group(child_user_ba, child_group_a) # False: user is NOT found in Child Group A (the user is in B)
 
 
