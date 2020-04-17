@@ -1,4 +1,5 @@
 from heapq import heappush, heappop
+import sys
 
 class Node(object):
     def __init__(self, value, letter=''):
@@ -146,10 +147,19 @@ def huffman_decode(str, node):
 
 
 str_to_encode = "helllotherelongstring"
+print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
+print ("The content of the data is: {}\n".format(str_to_encode))
+
 top = huffman_build_tree(str_to_encode)
 
 encoded = huffman_encode(str_to_encode, top)
-print(encoded)
+print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded, base=2))))
+print ("The content of the encoded data is: {}\n".format(encoded))
 
-huffman_decode(encoded, top)
+# print(encoded)
+
+decoded = huffman_decode(encoded, top)
+
+print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded)))
+print ("The content of the encoded data is: {}\n".format(decoded))
         
