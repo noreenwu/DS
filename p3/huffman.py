@@ -1,7 +1,5 @@
 from heapq import heappush, heappop
 
-
-
 class Node(object):
     def __init__(self, value, letter=''):
         self.letter = letter
@@ -49,29 +47,6 @@ class Node(object):
     def __lt__(self, other):
         return (self.value < other.value)
 
-
-def decode(str, node):
-    if node is None:
-        return
-    curr = node
-    print ("decode {}".format(node.get_value()))
-    res = ''    
-    for s in str:
-        if s == '0':
-            if (curr.has_left_child()):
-                curr = curr.get_left_child()
-        elif s == '1':
-            if (curr.has_right_child()):
-                curr = curr.get_right_child()
-
-        if curr.get_letter() != '':
-            res += curr.get_letter()
-            curr = node
-
-    print (res)
-    return res
-
-
 def huffman_build_tree(data):
     # count frequency of letters
     dict = {}    
@@ -85,8 +60,8 @@ def huffman_build_tree(data):
         print ("new node {}".format(node))
         heappush(heap, node)
 
-
-    # create mini-trees with two lowest frequency values until all nodes are under one parent
+    # create mini-trees with two lowest frequency values and merge trees
+    #   until all nodes are under one parent
     while len(heap) > 1:
         tree = Node(0)    
         pop1 = heappop(heap)
@@ -147,17 +122,34 @@ def huffman_encode(data, tree):
 
     return encoded
 
-def huffman_decode(data, tree):
-    pass
+def huffman_decode(str, node):
+# def decode(str, node):
+    if node is None:
+        return
+    curr = node
+    print ("decode {}".format(node.get_value()))
+    res = ''    
+    for s in str:
+        if s == '0':
+            if (curr.has_left_child()):
+                curr = curr.get_left_child()
+        elif s == '1':
+            if (curr.has_right_child()):
+                curr = curr.get_right_child()
+
+        if curr.get_letter() != '':
+            res += curr.get_letter()
+            curr = node
+
+    print (res)
+    return res
 
 
-
-str_to_encode = "helllo"
+str_to_encode = "helllotherelongstring"
 top = huffman_build_tree(str_to_encode)
 
 encoded = huffman_encode(str_to_encode, top)
 print(encoded)
 
-decode(encoded, top)
-
+huffman_decode(encoded, top)
         
