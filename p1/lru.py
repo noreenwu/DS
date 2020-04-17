@@ -32,7 +32,6 @@ class LRU_Cache(object):
 
 
     def LRU_append(self, new_node):
-        print("LRU_append")
         if self.lru_head is None:
             self.lru_head = new_node
             self.lru_tail = new_node
@@ -42,11 +41,8 @@ class LRU_Cache(object):
             new_node.prev = self.lru_tail
             self.lru_tail.next = new_node
             self.lru_tail = new_node
-            print("appended and moved the tail")
 
     def LRU_update(self, node, key, value):
-        print("LRU_update")
-
         if self.lru_head == node:
             # if node was first in list
             self.lru_head = self.lru_head.next
@@ -60,7 +56,7 @@ class LRU_Cache(object):
         n = Node(key, value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         # n = self.cache[key]
 
-        print("address of updated node ", self.cache[key].value)
+        # print("address of updated node ", self.cache[key].value)
         # something = self.cache[key]
 
         self.lru_tail.next = n
@@ -73,7 +69,7 @@ class LRU_Cache(object):
         if self.lru_head is None:
             return
 
-        print("remove oldest head is ", self.lru_head.key)
+        # print("remove oldest head is ", self.lru_head.key)
         del(self.cache[self.lru_head.key])
 
         if self.lru_head == self.lru_tail:
@@ -95,7 +91,7 @@ class LRU_Cache(object):
         # if cache is full
         if self.num_entries >= self.max_values:
             ## remove oldest
-            print("MAX ENTRIES in cache")
+            # print("MAX ENTRIES in cache")
             self.LRU_remove_oldest()
             self.num_entries -= 1
 
@@ -123,64 +119,59 @@ class LRU_Cache(object):
 our_cache = LRU_Cache(5)
 
 our_cache.set(1, 1);
-
-print(our_cache)
-
 our_cache.set(2, 2);
-
-print(our_cache)
-
 our_cache.set(3, 3);
-
-print(our_cache)
-
 our_cache.set(4, 4);
 
-print(our_cache)
+print(our_cache.get(1))   # returns 1
+print(our_cache.get(2))   # returns 2
 
-our_cache.set(5, 5);
+print(our_cache.get(9))   # returns -1 (9 is not in the cache)
 
-print(our_cache)
+our_cache.set(5, 5)
+our_cache.set(6, 6)
 
-our_cache.set(6, 6);
-# our_cache.set(7, 7);
-print(our_cache)
+print(our_cache.get(3))   # returns -1
 
-our_cache.set(3, 30);
 
-print(our_cache)
+# # our_cache.set(7, 7);
+# print(our_cache)
 
-our_cache.set(2, 20)
+# our_cache.set(3, 30);
 
-print(our_cache)
+# print(our_cache)
 
-our_cache.set(4, 40)
+# our_cache.set(2, 20)
 
-print(our_cache)
+# print(our_cache)
 
-our_cache.set(1, 10)
+# our_cache.set(4, 40)
 
-print(our_cache)
-# our_cache.get(1)       # returns 1
-# our_cache.get(2)       # returns 2
-print("GET")
-print(our_cache.get(9))      # returns -1 because 9 is not present in the cache
+# print(our_cache)
 
-print(our_cache.get(4))
+# our_cache.set(1, 10)
 
-print(our_cache)
+# print(our_cache)
+# # our_cache.get(1)       # returns 1
+# # our_cache.get(2)       # returns 2
+# print("GET")
+# print(our_cache.get(9))      # returns -1 because 9 is not present in the cache
 
-print(our_cache.get(1))
+# print(our_cache.get(4))
 
-print(our_cache)
+# print(our_cache)
 
-our_cache.get(6)
+# print(our_cache.get(1))
 
-print(our_cache)
+# print(our_cache)
 
-our_cache.set(13, 13)
+# our_cache.get(6)
 
-print(our_cache)
+# print(our_cache)
+
+# our_cache.set(13, 13)
+
+# print(our_cache)
 
 # our_cache.set(5, 5)
 # our_cache.set(6, 6)
