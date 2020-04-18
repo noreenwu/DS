@@ -23,11 +23,42 @@ def find_files(suffix, path):
         for f in files:
             fullpath = "{}/{}".format(path, f)
             if os.path.isdir(fullpath):
-                find_files(".c", fullpath)
+                find_files(suffix, fullpath)
             else:
-                if fullpath.endswith(".c"):
+                if fullpath.endswith(suffix):
                      print(fullpath)
 
 
-
+print("find files ending in .c")
 find_files(".c", ".")
+
+
+# output should match what is found with find
+
+# $ find . -name \*.c
+# ./a.c
+# ./testdir/subdir3/subsubdir1/b.c
+# ./testdir/t1.c
+# ./testdir/subdir5/cat.c
+# ./testdir/subdir5/a.c
+# ./testdir/subdir1/a.c
+# ./testdir/dog.c
+
+
+
+print("\n\nfind files ending in .py")
+find_files(".py", ".")
+
+# $ find . -name \*.py
+# ./problem_2.py
+# ./ex.py
+
+
+print("\n\nfind files ending in .h")
+find_files(".h", ".")
+
+# $ find . -name *\.h
+# ./testdir/subdir3/subsubdir1/b.h
+# ./testdir/subdir5/a.h
+# ./testdir/t1.h
+# ./testdir/subdir1/a.h
