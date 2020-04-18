@@ -73,7 +73,6 @@ def union(llist_1, llist_2):
 
 
 def intersection(llist_1, llist_2):
-    # Your Solution Here
 
     new_llist = LinkedList()
     dict = {}
