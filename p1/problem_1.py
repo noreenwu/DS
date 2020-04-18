@@ -41,18 +41,21 @@ class LRU_Cache(object):
             new_node.prev = self.lru_tail
             self.lru_tail.next = new_node
             self.lru_tail = new_node
+            # print("tacked on {}".format(new_node.value))
 
     def LRU_update(self, node, key, value):
         if self.lru_head == node:
             # if node was first in list
             self.lru_head = self.lru_head.next
 
+        elif self.lru_tail == node:
+            return
+
         else:
             # remove the specified node by making its predecessor skip over specified node
             node.prev.next = node.next
 
         # node.prev = self.lru_tail
-
         n = Node(key, value)   # for some reason, cannot point to old node at end of list so made new node w/ same value
         # n = self.cache[key]
 
@@ -102,75 +105,59 @@ class LRU_Cache(object):
     def __repr__(self):
         curr = self.lru_head
 
-        for d in self.cache:
-            print ("{}: {}".format(d, self.cache[d].value))
-        str = "num_entries {}: ".format(self.num_entries)
+        # for d in self.cache:
+        #     print ("{}: {}".format(d, self.cache[d].value))
+        str = "cache has {} entries:\n\t".format(self.num_entries)
         while curr:
             num = curr.value
             str += "node {}, ".format(curr.value)
             curr = curr.next
+        str += "\n"
         return (str)
 
 
 our_cache = LRU_Cache(5)
-print(our_cache.get(10))        # return -1
+print("get 10 : ", our_cache.get(10))        # return -1
 
+print("set 1, 2, 3, 4")
 our_cache.set(1, 1);
 our_cache.set(2, 2);
 our_cache.set(3, 3);
 our_cache.set(4, 4);
 
-print(our_cache.get(1))   # returns 1
-print(our_cache.get(2))   # returns 2
+print(our_cache)
 
-print(our_cache.get(9))   # returns -1 (9 is not in the cache)
+print("get 1 : ", our_cache.get(1))         # returns 1
 
+print(our_cache)
+
+print("get 2 : ", our_cache.get(2))         # returns 2
+
+print(our_cache)
+
+print("get 9 (expect -1): {}\n".format(our_cache.get(9)))     # returns -1 (9 is not in the cache)
+
+print("set 5, 6")
 our_cache.set(5, 5)
 our_cache.set(6, 6)
 
-print(our_cache.get(3))   # returns -1
+print(our_cache)
+
+print("get 3 (was LRU and bumped, expect -1): {}\n".format(our_cache.get(3)))     # returns -1 (3 was bumped off cache because LRU)
+
+print("set 7")
+our_cache.set(7, 7)
+
+print(our_cache)
+
+our_cache.set(5, 50)   
+
+print("get 5: expect 50: ", our_cache.get(5))          # returns 50
+
+print(our_cache)
+
+print(our_cache.get(6))          # returns 6
+
+print(our_cache)
 
 
-# # our_cache.set(7, 7);
-# print(our_cache)
-
-# our_cache.set(3, 30);
-
-# print(our_cache)
-
-# our_cache.set(2, 20)
-
-# print(our_cache)
-
-# our_cache.set(4, 40)
-
-# print(our_cache)
-
-# our_cache.set(1, 10)
-
-# print(our_cache)
-# # our_cache.get(1)       # returns 1
-# # our_cache.get(2)       # returns 2
-# print("GET")
-# print(our_cache.get(9))      # returns -1 because 9 is not present in the cache
-
-# print(our_cache.get(4))
-
-# print(our_cache)
-
-# print(our_cache.get(1))
-
-# print(our_cache)
-
-# our_cache.get(6)
-
-# print(our_cache)
-
-# our_cache.set(13, 13)
-
-# print(our_cache)
-
-# our_cache.set(5, 5)
-# our_cache.set(6, 6)
-
-# our_cache.get(3)      # returns -1 because the cache reached it's capacity and 3 was the least recently used entry
