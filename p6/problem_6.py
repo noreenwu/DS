@@ -108,10 +108,11 @@ for i in element_1:
 for i in element_2:
     linked_list_2.append(i)
 
-print(linked_list_1)
-print(linked_list_2)
-print (union(linked_list_1,linked_list_2))
-print (intersection(linked_list_1,linked_list_2))
+print("lists 1 and 2")
+# print(linked_list_1)
+# print(linked_list_2)
+print ("union :", union(linked_list_1,linked_list_2))                  # 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 21 -> 32 -> 9 -> 1 -> 11 -> 
+print ("intersection : ", intersection(linked_list_1,linked_list_2))   # 6 -> 4 -> 6 -> 21 -> 
 
 # # Test case 2
 
@@ -127,8 +128,27 @@ for i in element_1:
 for i in element_2:
     linked_list_4.append(i)
 
-print("lists 3 and 4")
-print(linked_list_3)
-print(linked_list_4)
-print (union(linked_list_3,linked_list_4))
-print (intersection(linked_list_3,linked_list_4))
+print("\nlists 3 and 4")
+# print(linked_list_3)
+# print(linked_list_4)
+print ("union :", union(linked_list_3,linked_list_4))             # 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 21 -> 32 -> 9 -> 1 -> 11 ->  
+print ("intersection : ", intersection(linked_list_3,linked_list_4))      # no elements
+
+
+# Test case 3
+
+linked_list_5 = LinkedList()
+linked_list_6 = LinkedList()
+
+element_1 = []
+element_2 = [2, 3, 6]
+
+for i in element_1:
+    linked_list_5.append(i)
+
+for i in element_2:
+    linked_list_6.append(i)
+
+print("\nlists 5 and 6")
+print ("union : ", union(linked_list_5, linked_list_6))             # 2 -> 3-> 6
+print ("intersection : ", intersection(linked_list_5, linked_list_6))      # no elements
