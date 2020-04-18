@@ -1,11 +1,11 @@
 # Blockchain
 
 A blockchain is a sequential chain of records, which could represent transactions,
-that is stored in multiple places across a network. Each record contains its data,
-a timestamp indicating when it was created, the previous block's hash, and the block's own hash, 
-which is dependent on the block's data and on the previous block's hash. This makes it
-impossible to change the data in a block, because that would require a recompute of 
-its hash, which would invalidate all subsequent blocks.
+that is stored in multiple places across a network as its collective source of truth. 
+Each record contains its data, a timestamp indicating when it was created, the previous block's 
+hash, and the block's own hash, which is dependent on the block's data and on the previous block's 
+hash. This makes it impossible to change the data in a block, because that would require a recompute of 
+its hash, which would invalidate the hashes of all subsequent blocks.
 
 
 ## Time Space Analysis
