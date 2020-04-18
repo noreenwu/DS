@@ -59,6 +59,7 @@ def huffman_build_tree(data):
     for k, v in dict.items():
         node = Node(v, k)
         heappush(heap, node)
+        # print("pushing node of value {}".format(k))
 
     # create mini-trees with two lowest frequency values and merge trees
     #   until all nodes are under one parent
@@ -73,18 +74,21 @@ def huffman_build_tree(data):
         heappush(heap, tree)
 
     top = heappop(heap)    
-
     return top  # encode/decode tree
 
 
 encode_table = {}   
 
+def new_encode_table():
+    encode_table.clear()
+
+
 def encode(node, charstr):
-    # visit_order = []    
-  
+
     if node:
+        # print("encode {} {}".format(charstr, node.get_letter(), node.get_value()))
+
         if node.get_letter() != '':
-            # visit_order.append(node.get_value())
             node.set_code(charstr)
             encode_table[node.get_letter()] = node.get_code()
 
@@ -96,8 +100,20 @@ def encode(node, charstr):
 
 
 def huffman_encoding(data):   
-    top = huffman_build_tree(data)             # build the encode/decode tree
-    encode(top, "")                            # traverse tree to create codes
+    if data == "":
+        return "", Node(0)
+
+    top = huffman_build_tree(data)                 # build the encode/decode tree
+
+    if top.get_left_child() == None and top.get_right_child() == None:   # if only one character in input
+        encode_table[top.get_letter()] = str(top.get_value())
+    else:
+        encode(top, "")                            # traverse tree to create codes
+
+    # print("printing encode_table")
+    # for k, v in encode_table.items():
+    #     print("{} {}".format(k, v))
+
 
     encoded = ""
     for c in data:
@@ -107,6 +123,10 @@ def huffman_encoding(data):
 
 def huffman_decoding(str, node):
     # decode the str provided using provided tree (node)
+
+    if str == "":
+        return ""
+
     if node is None:
         return ""
 
@@ -129,6 +149,8 @@ def huffman_decoding(str, node):
 
 # Test Case 1 
 
+new_encode_table()
+
 str_to_encode = "oh hello i am a nice happy string yes indeed"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
@@ -140,11 +162,13 @@ print ("The content of the encoded data is: {}\n".format(encoded_data))
 decoded_data = huffman_decoding(encoded_data, tree)
 
 print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-print ("The content of the encoded data is: {}\n".format(decoded_data))
+print ("The content of the decoded data is: {}\n".format(decoded_data))
         
+
 
 # Test Case 2
 
+new_encode_table()
 str_to_encode = "it is a very nice day don't mind the clouds"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
@@ -156,20 +180,41 @@ print ("The content of the encoded data is: {}\n".format(encoded_data))
 decoded_data = huffman_decoding(encoded_data, tree)
 
 print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-print ("The content of the encoded data is: {}\n".format(decoded_data))        
+print ("The content of the decoded data is: {}\n".format(decoded_data))        
+
 
 
 # Test Case 3
 
-str_to_encode = "What are we going to do today?"
+new_encode_table()
+str_to_encode = "a"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
 print ("The content of the data is: {}\n".format(str_to_encode))
 
 encoded_data, tree = huffman_encoding(str_to_encode)
+
 print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
 print ("The content of the encoded data is: {}\n".format(encoded_data))
 
 decoded_data = huffman_decoding(encoded_data, tree)
 
 print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-print ("The content of the encoded data is: {}\n".format(decoded_data))    
+print ("The content of the decoded data is: {}\n".format(decoded_data))   
+
+
+# Test Case 4
+
+new_encode_table()
+str_to_encode = "ah"
+print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
+print ("The content of the data is: {}\n".format(str_to_encode))
+
+encoded_data, tree = huffman_encoding(str_to_encode)
+
+print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+decoded_data = huffman_decoding(encoded_data, tree)
+
+print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+print ("The content of the decoded data is: {}\n".format(decoded_data))   
