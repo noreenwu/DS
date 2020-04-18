@@ -68,12 +68,24 @@ def is_user_in_group(user, group):
     print("Look for {} in {}\n".format(user, group.name))
 
     result = group.user_in_group(user)
-    print("Is the user {} in group {}?  {} ".format(user, group.name, result))
+    print("Is the user {} in group {}?  {}\n".format(user, group.name, result))
     return result
 
 
+# create a tree of groups and subgroups:
+#  Parent Group contains Child Group A and Child Group B
+#  Child Group A contains Child Group AA and Child Group AB
+#  Child Group B contains Child Group BA and Child Group BB
+
+#  User P is in the Parent Group
+#  User B is in Child Group B
+#  User BA is in Child Group BA
 
 parent_group = Group("Parent Group")
+user_p = "User P"
+parent_group.add_user(user_p)
+
+is_user_in_group(user_p, parent_group)          # True: user is in Parent Group
 
 child_group_a = Group("Child Group A")
 parent_group.add_group(child_group_a)
@@ -96,8 +108,9 @@ child_group_b.add_group(child_group_bb)
 child_user_b = "childuserb"
 child_group_b.add_user(child_user_b)
 
-is_user_in_group(child_user_b, parent_group)  # True: user is found in Child Group B under Parent Group
-
+is_user_in_group(child_user_b, parent_group)   # True: user is found in Child Group B under Parent Group
+is_user_in_group(child_user_b, child_group_b)  # True: user is found in Child Group B
+is_user_in_group(child_user_b, child_group_a)  # False: user is not in Child Group A
 
 child_user_ba = "childuserba"
 child_group_ba.add_user(child_user_ba)
