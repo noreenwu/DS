@@ -127,6 +127,7 @@ def huffman_decoding(str, node):
 
     return res
 
+# Test Case 1 
 
 str_to_encode = "oh hello i am a nice happy string yes indeed"
 print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
@@ -141,3 +142,34 @@ decoded_data = huffman_decoding(encoded_data, tree)
 print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 print ("The content of the encoded data is: {}\n".format(decoded_data))
         
+
+# Test Case 2
+
+str_to_encode = "it is a very nice day don't mind the clouds"
+print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
+print ("The content of the data is: {}\n".format(str_to_encode))
+
+encoded_data, tree = huffman_encoding(str_to_encode)
+print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+decoded_data = huffman_decoding(encoded_data, tree)
+
+print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+print ("The content of the encoded data is: {}\n".format(decoded_data))        
+
+
+# Test Case 3
+
+str_to_encode = "What are we going to do today?"
+print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
+print ("The content of the data is: {}\n".format(str_to_encode))
+
+encoded_data, tree = huffman_encoding(str_to_encode)
+print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+decoded_data = huffman_decoding(encoded_data, tree)
+
+print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+print ("The content of the encoded data is: {}\n".format(decoded_data))    
