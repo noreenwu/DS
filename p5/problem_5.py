@@ -78,6 +78,7 @@ class Blockchain:
 
     def __init__(self):
         self.blockchain = LinkedList()
+        self.create_genesis_block()
 
     def pr(self):
         print(self.blockchain)
@@ -99,31 +100,55 @@ class Blockchain:
         return self.blockchain.get_latest_block()
 
 
-bc = Blockchain()
-bc.create_genesis_block()                # very first block: the prev hash is set to 0
+# Test Case 1: create a blockchain with greetings data and print it out
+print("Test Case 1")
+bc1 = Blockchain()
+# bc.create_genesis_block()                # moved to run whenever a new Blockchain is created
 
 ts = datetime.now()
-new_block = Block(ts, "hello", bc.get_latest_block().get_hash())      # previous hash should look like the genesis block's hash
-bc.add_block(new_block)
+new_block = Block(ts, "hello", bc1.get_latest_block().get_hash())      # previous hash should look like the genesis block's hash
+bc1.add_block(new_block)
 
 ts = datetime.now()
-new_block = Block(ts, "hola", bc.get_latest_block().get_hash())       # previous hash should look like hello's hash
-bc.add_block(new_block)
+new_block = Block(ts, "hola", bc1.get_latest_block().get_hash())       # previous hash should look like hello's hash
+bc1.add_block(new_block)
 
 ts = datetime.now()
-new_block = Block(ts, "gutentag", bc.get_latest_block().get_hash())   # previous hash should look like hola's hash
-bc.add_block(new_block)
+new_block = Block(ts, "gutentag", bc1.get_latest_block().get_hash())   # previous hash should look like hola's hash
+bc1.add_block(new_block)
 
 ts = datetime.now()
-new_block = Block(ts, "konichiwa", bc.get_latest_block().get_hash())  # previous has should look like gutentag's hash
-bc.add_block(new_block)
+new_block = Block(ts, "konichiwa", bc1.get_latest_block().get_hash())  # previous has should look like gutentag's hash
+bc1.add_block(new_block)
+
+
+
+bc1.pr()                                  # print all blocks in Blockchain bc1
+
+print("Test Case 2")
+
+# Test Case 2: create an empty blockchain and print it out. Only the genesis record is there.
+
+bc2 = Blockchain()
+
+bc2.pr()                                  # print all blocks in Blockchain bc2
+
+
+# Test Case 3: create a blockchain and attempt to add blocks with invalid data. The 2nd and 3rd blocks are successfully added.
+
+print("Test Case 3")
+bc3 = Blockchain()
 
 ts = datetime.now()
-new_block = Block(ts, "", bc.get_latest_block().get_hash())           # no data provided: do not add to chain
-bc.add_block(new_block)
+new_block = Block(ts, "", bc3.get_latest_block().get_hash())                    # no data provided: do not add to chain
+bc3.add_block(new_block)                
 
-ts = ""                                  # invalid timestamp
-new_block = Block(ts, "nihao", bc.get_latest_block().get_hash())
-bc.add_block(new_block)
+ts = ""                                                                         # no timestamp provided
+new_block = Block(ts, "whatdayisit", bc3.get_latest_block().get_hash())
+bc3.add_block(new_block)  
 
-bc.pr()                                  # print all blocks
+ts = datetime.now()                                                              # acceptably defined block
+new_block = Block(ts, "igetit", bc3.get_latest_block().get_hash())
+bc3.add_block(new_block)  
+
+bc3.pr()             # both the 2nd and 3rd blocks (timestamp added when missing) were added but not the one with no data
