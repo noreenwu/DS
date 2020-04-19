@@ -218,3 +218,22 @@ decoded_data = huffman_decoding(encoded_data, tree)
 
 print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 print ("The content of the decoded data is: {}\n".format(decoded_data))   
+
+
+# Test Case 5: empty string
+
+new_encode_table()
+str_to_encode = ""
+
+print ("The size of the data is: {}\n".format(sys.getsizeof(str_to_encode)))
+print ("The content of the data is: {}\n".format(str_to_encode))
+
+encoded_data, tree = huffman_encoding(str_to_encode)
+
+print ("The size of the encoded data is: {}\n".format(0))  # have to hard-code this because cannot do int() operation on blank string
+print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+decoded_data = huffman_decoding(encoded_data, tree)
+
+print ("The size of the decoded data is: {}\n".format(0))  # same here: the size of a blank string is actually not zero
+print ("The content of the decoded data is: {}\n".format(decoded_data))   
