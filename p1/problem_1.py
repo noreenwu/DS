@@ -41,7 +41,6 @@ class LRU_Cache(object):
             new_node.prev = self.lru_tail
             self.lru_tail.next = new_node
             self.lru_tail = new_node
-            # print("tacked on {}".format(new_node.value))
 
     def LRU_update(self, node, key, value):
         if self.lru_head == node:
@@ -69,7 +68,6 @@ class LRU_Cache(object):
         if self.lru_head is None:
             return
 
-        # print("remove oldest head is ", self.lru_head.key)
         del(self.cache[self.lru_head.key])
 
         if self.lru_head == self.lru_tail:   # one item in list
@@ -81,7 +79,7 @@ class LRU_Cache(object):
     def set(self, key, value):
 
         # if the key is present in the cache
-        if self.cache.get(key) != None:
+        if key in self.cache:
             # reset the value and update the LRU order
             self.LRU_update(self.cache[key], key, value)
             return
@@ -91,7 +89,6 @@ class LRU_Cache(object):
         # if cache is full
         if self.num_entries >= self.max_values:
             ## remove oldest
-            # print("MAX ENTRIES in cache")
             self.LRU_remove_oldest()
             self.num_entries -= 1
 
@@ -105,9 +102,8 @@ class LRU_Cache(object):
     def __repr__(self):
         curr = self.lru_head
 
-        # for d in self.cache:
-        #     print ("{}: {}".format(d, self.cache[d].value))
         str = "cache has {} entries:\n\t".format(self.num_entries)
+
         while curr:
             num = curr.value
             str += "node {}, ".format(curr.value)
@@ -116,9 +112,16 @@ class LRU_Cache(object):
         return (str)
 
 
+# Test Case 1: Create a Cache. Before setting any values, what gets returned?
+print("Test Case 1: Retrieve a value when nothing in cache (get -1)")
 our_cache = LRU_Cache(5)
 print("get 10 : ", our_cache.get(10))        # return -1
 
+
+# Test Case 2: Put some values into the cache: should be able to retrieve the set values. 
+#   once a value is retrieved, that item should move to the end of the line as it was
+#   the most recently used.
+print("\nTest Case 2: Put some values into the cache, check that they are in the right order")
 print("set 1, 2, 3, 4")
 our_cache.set(1, 1);
 our_cache.set(2, 2);
@@ -127,6 +130,7 @@ our_cache.set(4, 4);
 
 print(our_cache)
 
+print("\nTest Case 3: Retrieve values from the cache. They should rotate to end of list when accessed")
 print("get 1 : ", our_cache.get(1))         # returns 1
 
 print(our_cache)
@@ -135,29 +139,26 @@ print("get 2 : ", our_cache.get(2))         # returns 2
 
 print(our_cache)
 
+
+# Test Case 3: Retrieve something that was never put into the cache
+print("\nTest Case 4: Now check something that was never put into the cache (get -1)")
+
 print("get 9 (expect -1): {}\n".format(our_cache.get(9)))     # returns -1 (9 is not in the cache)
 
+# Test Case 4: Put some more data into the cache. Now we have exceeded the size of the cache, so the
+#   least recently used item needs to be bumped out. In this case, that value is 3.
 print("set 5, 6")
 our_cache.set(5, 5)
+
 our_cache.set(6, 6)
 
 print(our_cache)
 
 print("get 3 (was LRU and bumped, expect -1): {}\n".format(our_cache.get(3)))     # returns -1 (3 was bumped off cache because LRU)
 
+
+# Test Case 5: Put something else into the cache, value 7. Node 4 gets bumped out
 print("set 7")
 our_cache.set(7, 7)
 
 print(our_cache)
-
-our_cache.set(5, 50)   
-
-print("get 5: expect 50: ", our_cache.get(5))          # returns 50
-
-print(our_cache)
-
-print(our_cache.get(6))          # returns 6
-
-print(our_cache)
-
-
