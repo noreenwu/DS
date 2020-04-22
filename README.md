@@ -9,7 +9,7 @@ April 2020
 
 ## p4: Active Directory: is user in group
 
-## p5: Blockchain
+## p5: Simple Blockchain
 
 ## p6: Union and Intersection of Linked Lists
 
